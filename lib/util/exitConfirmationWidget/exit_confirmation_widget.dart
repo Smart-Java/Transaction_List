@@ -36,16 +36,16 @@ class ExitConfirmationWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       border: Border.all(
-                        color: AppColors.blackColor,
+                        color: AppColors.primaryColor,
                         width: 2.0,
                       ),
-                      color: Colors.white,
+                      color: AppColors.whiteColor,
                     ),
                     child: const Center(
                       child: Text(
                         'No',
                         style: TextStyle(
-                          color: AppColors.blackColor,
+                          color: AppColors.primaryColor,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -62,13 +62,13 @@ class ExitConfirmationWidget extends StatelessWidget {
                     height: 56.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: AppColors.blackColor,
+                      color: AppColors.primaryColor,
                     ),
                     child: const Center(
                       child: Text(
                         'Yes',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.whiteColor,
                           fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                         ),

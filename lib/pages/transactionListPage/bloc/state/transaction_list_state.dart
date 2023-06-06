@@ -10,17 +10,27 @@ class TransactionsListState extends Equatable {
     this.allTxnList,
     this.creditTxnList,
     this.debitTxnList,
-    this.searchedResultList,
+    this.allSearchTxnList,
+    this.creditSearchTxnList,
+    this.debitSearchTxnList,
+    this.isSearchOn,
+    this.isThereAnySearchResult,
+    this.searchQuery,
   });
 
   final bool? isLoading;
   final bool? isRequestSuccessful;
+  final bool? isSearchOn;
+  final bool? isThereAnySearchResult;
   final int? currentTxnTab;
   final List<TransactionListModel>? allTxnList;
   final List<TransactionListModel>? creditTxnList;
   final List<TransactionListModel>? debitTxnList;
-  final List<TransactionListModel>? searchedResultList;
+  final List<TransactionListModel>? allSearchTxnList;
+  final List<TransactionListModel>? creditSearchTxnList;
+  final List<TransactionListModel>? debitSearchTxnList;
   final String? requestMessage;
+  final String? searchQuery;
   @override
   List<Object?> get props => [
         isLoading,
@@ -29,29 +39,44 @@ class TransactionsListState extends Equatable {
         allTxnList,
         creditTxnList,
         debitTxnList,
+        allSearchTxnList,
+        creditSearchTxnList,
+        debitSearchTxnList,
         currentTxnTab,
-        searchedResultList,
+        isSearchOn,
+        isThereAnySearchResult,
+        searchQuery,
       ];
 
   TransactionsListState copyWith({
     bool? isLoading,
     bool? isRequestSuccessful,
+    bool? isSearchOn,
+    bool? isThereAnySearchResult,
     required int currentTxnTab,
     List<TransactionListModel>? allTxnList,
     List<TransactionListModel>? creditTxnList,
     List<TransactionListModel>? debitTxnList,
-    List<TransactionListModel>? searchedResultList,
+    List<TransactionListModel>? allSearchTxnList,
+    List<TransactionListModel>? creditSearchTxnList,
+    List<TransactionListModel>? debitSearchTxnList,
     String? requestMessage,
+    String? searchQuery,
   }) {
     return TransactionsListState(
       isLoading: isLoading,
       requestMessage: requestMessage,
+      isSearchOn: isSearchOn,
+      isThereAnySearchResult: isThereAnySearchResult,
       isRequestSuccessful: isRequestSuccessful,
       currentTxnTab: currentTxnTab,
       allTxnList: allTxnList,
       creditTxnList: creditTxnList,
       debitTxnList: debitTxnList,
-      searchedResultList: searchedResultList,
+      allSearchTxnList: allSearchTxnList,
+      creditSearchTxnList: creditSearchTxnList,
+      debitSearchTxnList: debitSearchTxnList,
+      searchQuery: searchQuery,
     );
   }
 }

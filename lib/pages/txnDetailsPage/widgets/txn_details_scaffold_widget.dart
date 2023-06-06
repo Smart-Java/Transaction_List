@@ -65,22 +65,27 @@ class _TxnDetailsScaffoldWidgetState extends State<TxnDetailsScaffoldWidget> {
                     TxnDetailsProperyValueWidget(
                       property: 'Date and Time',
                       value: txnData['dateTime'],
+                      isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Reference',
                       value: txnData['paymentRef'],
+                      isItForTxnReference: true,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Type',
                       value: txnData['txnType'],
+                      isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Balance',
                       value: txnData['amount'],
+                      isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Narration',
                       value: txnData['narration'],
+                      isItForTxnReference: false,
                     ),
                   ],
                 ),

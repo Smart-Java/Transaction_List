@@ -59,11 +59,26 @@ class _TxnListItemsWidgetState extends State<TxnListItemsWidget> {
     });
     return BlocConsumer<TransactionListBloc, TransactionsListState>(
       listener: (context, state) {
-        if (state.allTxnList != null && state.allTxnList!.isEmpty && state.requestMessage != null) {
+        if (state.allTxnList != null &&
+            state.allTxnList!.isEmpty &&
+            state.requestMessage != null) {
           var message = state.requestMessage as String;
           setState(() {
             emptyTxnList = message;
           });
+        }
+
+        if (state.isThereAnySearchResult == false) {
+          if (state.searchQuery != null && state.searchQuery!.isNotEmpty) {
+            setState(() {
+              emptyTxnList =
+                  '${state.searchQuery} is not found in the txn list';
+            });
+          } else {
+            setState(() {
+              emptyTxnList = 'Which txn are you looking for?';
+            });
+          }
         }
 
         setState(() {
@@ -72,7 +87,8 @@ class _TxnListItemsWidgetState extends State<TxnListItemsWidget> {
 
         if (state.allTxnList != null &&
             state.creditTxnList != null &&
-            state.debitTxnList != null) {
+            state.debitTxnList != null &&
+            state.isSearchOn != true) {
           setState(() {
             if (indexTab == 0) {
               txnList = state.allTxnList!;
@@ -82,7 +98,24 @@ class _TxnListItemsWidgetState extends State<TxnListItemsWidget> {
               txnList = state.debitTxnList!;
             }
           });
-        }
+        } 
+        
+        if (state.allSearchTxnList != null &&
+            state.creditSearchTxnList != null &&
+            state.debitSearchTxnList != null &&
+            state.isSearchOn == true) {
+          setState(() {
+            if (indexTab == 0) {
+              txnList = state.allSearchTxnList!;
+            } else if (indexTab == 1) {
+              txnList = state.creditSearchTxnList!;
+            } else {
+              txnList = state.debitSearchTxnList!;
+            }
+          });
+        } 
+
+
 
         if (state.isLoading == true || state.isLoading == false) {
           setState(() {

@@ -17,6 +17,10 @@ class TransactionListBloc
   List<TransactionListModel> cachedCreditTxnList = [];
   List<TransactionListModel> cachedDebitTxnList = [];
 
+  List<TransactionListModel> cachedSearchAllTxnList = [];
+  List<TransactionListModel> cachedSearchCreditTxnList = [];
+  List<TransactionListModel> cachedSearchDebitTxnList = [];
+
   List<TransactionListModel> cachedSearchedResultTxnList = [];
 
   int currentIndexTab = 0;
@@ -81,12 +85,18 @@ class TransactionListBloc
       if (event.searchBase.isNotEmpty &&
           event.searchQuery.isNotEmpty &&
           event.searchIndexTab <= 2) {
+        emit(
+          state.copyWith(
+            currentTxnTab: currentIndexTab,
+            isSearchOn: true,
+          ),
+        );
+
         String query = event.searchQuery;
         String baseOnTxnField = event.searchBase;
         int indexTab = event.searchIndexTab;
 
-        debugPrint(
-            'operation occurring here $query $baseOnTxnField $indexTab');
+        debugPrint('operation occurring here $query $baseOnTxnField $indexTab');
 
         List<TransactionListModel> txnSearchList;
 
@@ -146,24 +156,41 @@ class TransactionListBloc
 
         switch (indexTab) {
           case 0:
-            cachedAllTxnList = searchedResultList.isNotEmpty ? searchedResultList : cachedAllTxnList;
+            cachedSearchAllTxnList =
+                searchedResultList.isNotEmpty ? searchedResultList : [];
             break;
           case 1:
-            cachedCreditTxnList = searchedResultList.isNotEmpty ? searchedResultList : cachedCreditTxnList;
+            cachedSearchCreditTxnList =
+                searchedResultList.isNotEmpty ? searchedResultList : [];
             break;
           case 2:
-            cachedDebitTxnList = searchedResultList.isNotEmpty ? searchedResultList : cachedDebitTxnList;
+            cachedSearchDebitTxnList =
+                searchedResultList.isNotEmpty ? searchedResultList : [];
             break;
           default:
-            cachedAllTxnList = searchedResultList.isNotEmpty ? searchedResultList : cachedAllTxnList;
+            cachedSearchAllTxnList =
+                searchedResultList.isNotEmpty ? searchedResultList : [];
         }
 
+        emit(
+          state.copyWith(
+            isSearchOn: true,
+            currentTxnTab: currentIndexTab,
+            allSearchTxnList: cachedSearchAllTxnList,
+            creditSearchTxnList: cachedSearchCreditTxnList,
+            debitSearchTxnList: cachedSearchDebitTxnList,
+            isThereAnySearchResult: searchedResultList.isNotEmpty,
+            searchQuery: event.searchQuery,
+          ),
+        );
+      } else {
         emit(
           state.copyWith(
             currentTxnTab: currentIndexTab,
             allTxnList: cachedAllTxnList,
             creditTxnList: cachedCreditTxnList,
             debitTxnList: cachedDebitTxnList,
+            isThereAnySearchResult: false,
           ),
         );
       }

@@ -4,10 +4,12 @@ import 'package:transactions_list/config/appColors/app_colors.dart';
 class TxnDetailsProperyValueWidget extends StatelessWidget {
   final String property;
   final String value;
+  final bool isItForTxnReference;
   const TxnDetailsProperyValueWidget({
     Key? key,
     required this.property,
     required this.value,
+    required this.isItForTxnReference,
   }) : super(key: key);
 
   @override
@@ -27,18 +29,39 @@ class TxnDetailsProperyValueWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: Text(
-                      value,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
+                child: isItForTxnReference == true
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 10.0,
+                              ),
+                              child: Text(
+                                value,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ),
+                          const Icon(
+                            Icons.file_copy_outlined,
+                            color: AppColors.blackColor,
+                          ),
+                        ],
+                      )
+                    : Align(
+                        alignment: AlignmentDirectional.topEnd,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 10.0,
+                          ),
+                          child: Text(
+                            value,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
               ),
             ],
           ),

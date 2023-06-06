@@ -21,7 +21,11 @@ class TransactionListRepo implements TransactionListRepoInterface {
     final checkConnection = await connection.isInternetEnabled();
     Either<FailureResponse, List> data;
     if (checkConnection) {
-      data = await transactionListData.responseFromGetTxnsRequest();
+      data = await transactionListData
+          .responseFromGetTxnsRequest()
+          .onError((error, stackTrace) {
+        return Left(errorOccuredResponse);
+      });
       if (data.isRight) {
         var responseData = data.right;
         List<TransactionListModel> txnListModel =
@@ -33,8 +37,7 @@ class TransactionListRepo implements TransactionListRepoInterface {
         return Left(responseData);
       }
     } else {
-      return Left(FailureResponse(
-          errorMessage: 'Check internet connection', statusCode: 0));
+      return Left(networkErrorResponse);
     }
   }
 }

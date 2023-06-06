@@ -28,6 +28,12 @@ class _TxnHeaderWidgetState extends State<TxnHeaderWidget> {
     'Bank name',
   ];
 
+  List tabList = [
+    {'title': 'All', 'color': AppColors.blackColor},
+    {'title': 'Credit', 'color': AppColors.greenColor},
+    {'title': 'Debit', 'color': AppColors.redColor}
+  ];
+
   int currentIndexTab = 0;
 
   String filterBaseOn = '';
@@ -160,7 +166,7 @@ class _TxnHeaderWidgetState extends State<TxnHeaderWidget> {
                         },
                         child: Container(
                           height: 30.0,
-                          width: 70.0,
+                          width: 75.0,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 5.0,
                             vertical: 5.0,
@@ -198,78 +204,48 @@ class _TxnHeaderWidgetState extends State<TxnHeaderWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        BlocProvider.of<TransactionListBloc>(context).add(
-                          GetTransactionListEvent(tabIndex: 0),
-                        );
-                      },
-                      child: const Text(
-                        'All',
-                        style: TextStyle(
-                          color: AppColors.blackColor,
-                        ),
+                ...List.generate(tabList.length, (index) {
+                  return TextButton(
+                    onPressed: () {
+                      BlocProvider.of<TransactionListBloc>(context).add(
+                        GetTransactionListEvent(tabIndex: index),
+                      );
+                    },
+                    child: Text(
+                      tabList[index]['title'],
+                      style: TextStyle(
+                        color: tabList[index]['color'],
                       ),
                     ),
-                    const Divider(
-                      color: AppColors.darkBlueColor,
-                      height: 1.5,
-                      thickness: 1.5,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        BlocProvider.of<TransactionListBloc>(context).add(
-                          GetTransactionListEvent(tabIndex: 1),
-                        );
-                      },
-                      child: const Text(
-                        'Credit',
-                        style: TextStyle(
-                          color: AppColors.greenColor,
-                        ),
-                      ),
-                    ),
-                    const Divider(
-                      color: AppColors.darkBlueColor,
-                      height: 1.5,
-                      thickness: 1.5,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        BlocProvider.of<TransactionListBloc>(context).add(
-                          GetTransactionListEvent(tabIndex: 2),
-                        );
-                      },
-                      child: const Text(
-                        'Debit',
-                        style: TextStyle(
-                          color: AppColors.redColor,
-                        ),
-                      ),
-                    ),
-                    const Divider(
-                      color: AppColors.darkBlueColor,
-                      height: 1.5,
-                      thickness: 1.5,
-                    ),
-                  ],
-                ),
+                  );
+                }),
               ],
             ),
-            const Divider(
-              color: AppColors.greyColor,
-              height: 1.5,
-              thickness: 1.5,
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ...List.generate(tabList.length, (index) {
+                      return currentIndexTab == index
+                          ? const SizedBox(
+                              width: 50.0,
+                              child: Divider(
+                                color: AppColors.darkBlueColor,
+                                height: 1.5,
+                                thickness: 1.5,
+                              ),
+                            )
+                          : Container();
+                    }),
+                  ],
+                ),
+                const Divider(
+                  color: AppColors.greyColor,
+                  height: 1.5,
+                  thickness: 1.5,
+                ),
+              ],
             ),
           ],
         ),
@@ -290,41 +266,43 @@ class _TxnHeaderWidgetState extends State<TxnHeaderWidget> {
           left: 10.0,
         ),
         title: const Text(
-          'Filter search base on',
+          'Filter Txn base on',
           style: TextStyle(
-            color: AppColors.primaryColor,
+            color: AppColors.blackColor,
             fontSize: 16.0,
             fontWeight: FontWeight.w700,
           ),
         ),
         content: SizedBox(
           height: 350.0,
-          child: Column(
-            children: [
-              ...List.generate(filterSearchList.length, (index) {
-                var filterKey = filterSearchList[index];
-                return RadioListTile<String>(
-                  value: filterKey,
-                  title: Text(
-                    filterKey,
-                    style: const TextStyle(
-                      color: AppColors.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.0,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ...List.generate(filterSearchList.length, (index) {
+                  var filterKey = filterSearchList[index];
+                  return RadioListTile<String>(
+                    value: filterKey,
+                    title: Text(
+                      filterKey,
+                      style: const TextStyle(
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14.0,
+                      ),
                     ),
-                  ),
-                  groupValue: filterBaseOn,
-                  onChanged: (value) {
-                    var userChoice = value as String;
-                    setState(() {
-                      filterBaseOn = userChoice;
-                    });
-                    debugPrint(userChoice.toString());
-                  },
-                  activeColor: AppColors.blackColor,
-                );
-              }),
-            ],
+                    groupValue: filterBaseOn,
+                    onChanged: (value) {
+                      var userChoice = value as String;
+                      setState(() {
+                        filterBaseOn = userChoice;
+                      });
+                      debugPrint(userChoice.toString());
+                    },
+                    activeColor: AppColors.blackColor,
+                  );
+                }),
+              ],
+            ),
           ),
         ),
         actions: [
