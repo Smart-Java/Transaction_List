@@ -40,7 +40,7 @@ class _TxnDetailsScaffoldWidgetState extends State<TxnDetailsScaffoldWidget> {
           const TxnDetailsHeaderWidget(),
           SingleChildScrollView(
             child: TxnDetailsWidget(
-              amount: txnData['amount'],
+              amount: txnData['amount'] ?? '',
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20.0,
@@ -64,27 +64,27 @@ class _TxnDetailsScaffoldWidgetState extends State<TxnDetailsScaffoldWidget> {
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Date and Time',
-                      value: txnData['dateTime'],
+                      value: txnData['dateTime'] ?? '',
                       isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Reference',
-                      value: txnData['paymentRef'],
+                      value: txnData['paymentRef'] ?? '',
                       isItForTxnReference: true,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Type',
-                      value: txnData['txnType'],
+                      value: txnData['txnType'] ?? '',
                       isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Balance',
-                      value: txnData['amount'],
+                      value: txnData['amount'] ?? '',
                       isItForTxnReference: false,
                     ),
                     TxnDetailsProperyValueWidget(
                       property: 'Narration',
-                      value: txnData['narration'],
+                      value: txnData['narration'] ?? '',
                       isItForTxnReference: false,
                     ),
                   ],
